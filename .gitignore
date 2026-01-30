@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment files (may contain secrets)
+.env
+.env.*
+.env.local
+.env.*.local
+
+# Session data (may contain tokens)
+session.json
+session_results.json
+*.session.json
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test output
+test-output.json
+*.test-output.json
+
+# IDE and editor
+.idea/
+.vscode/
+.agent/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Lock files (optional - uncomment if you want to exclude)
+# package-lock.json
+# yarn.lock

@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://radius.dev/schemas/request.schema.json",
+  "title": "Radius Request Definition (.rd)",
+  "description": "Schema for validating .rd request files in Radius",
+  "type": "object",
+  "required": ["meta", "request"],
+  "additionalProperties": false,
+  "properties": {
+    "meta": {
+      "type": "object",
+      "description": "Request metadata",
+      "required": ["name", "type", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human-readable name for the request"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["REST", "GraphQL"],
+          "description": "Type of API request"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Schema version for migration support"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "description": "Core request definition",
+      "required": ["method", "url"],
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
+          "description": "HTTP method"
+        },
+        "url": {
+          "type": "string",
+          "description": "Request URL with optional {{variable}} placeholders"
+        },
+        "query": {
+          "type": "object",
+          "description": "URL query parameters as key-value pairs",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "headers": {
+          "type": "object",
+          "description": "HTTP headers as key-value pairs",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "body": {
+          "type": "object",
+          "description": "Request body configuration",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "type": "string",
+              "enum": ["json", "form", "multipart", "raw", "graphql"],
+              "description": "Body content format"
+            },
+            "content": {
+              "description": "Body content (structure depends on format)"
+            },
+            "query": {
+              "type": "string",
+              "description": "GraphQL query string (used when format is graphql)"
+            },
+            "variables": {
+              "type": "object",
+              "description": "GraphQL variables (used when format is graphql)",
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "description": "Authentication configuration",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["none", "inherit", "bearer", "basic", "api-key"],
+          "description": "Authentication type"
+        },
+        "token": {
+          "type": "string",
+          "description": "Bearer token (use {{env.VAR}} reference)"
+        },
+        "username": {
+          "type": "string",
+          "description": "Basic auth username (use {{env.VAR}} reference)"
+        },
+        "password": {
+          "type": "string",
+          "description": "Basic auth password (use {{env.VAR}} reference)"
+        },
+        "key": {
+          "type": "string",
+          "description": "API key header/query param name"
+        },
+        "value": {
+          "type": "string",
+          "description": "API key value (use {{env.VAR}} reference)"
+        },
+        "in": {
+          "type": "string",
+          "enum": ["header", "query"],
+          "description": "Where to send the API key"
+        }
+      }
+    },
+    "scripts": {
+      "type": "object",
+      "description": "Pre-request and post-response scripts",
+      "additionalProperties": false,
+      "properties": {
+        "language": {
+          "type": "string",
+          "default": "javascript",
+          "description": "Script language (defaults to javascript, extensible for future languages)"
+        },
+        "pre": {
+          "type": "string",
+          "description": "Script to run before the request is sent"
+        },
+        "post": {
+          "type": "string",
+          "description": "Script to run after the response is received"
+        }
+      }
+    }
+  }
+}
