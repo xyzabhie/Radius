@@ -53,6 +53,7 @@ export class RequestRunner {
         this.session = session;
 
         // Rebuild resolver with session source at highest priority
+        // Use this.options to preserve variableSources (including environment)
         const sources = this.buildVariableSources(this.options);
         sources.unshift(session.getVariableSource());
         this.resolver = new VariableResolver(sources, { strict: false });
