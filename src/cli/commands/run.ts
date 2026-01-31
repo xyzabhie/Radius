@@ -7,7 +7,7 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { RequestRunner } from '../../core/runner/RequestRunner.js';
-import { EnvironmentManager } from '../../core/environments/EnvironmentManager.js';
+import { EnvironmentManager } from '../../core/environment/EnvironmentManager.js';
 import { SessionManager } from '../../core/session/SessionManager.js';
 import type { RadiusResponse } from '../../core/runner/types.js';
 import {
