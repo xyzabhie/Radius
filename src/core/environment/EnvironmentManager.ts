@@ -8,6 +8,7 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import yaml from 'js-yaml';
 import type { IVariableSource } from '../runner/types.js';
+import { DotEnvSource } from '../runner/resolver/sources/DotEnvSource.js';
 
 /**
  * Environment profile structure (from .rd file).
@@ -15,9 +16,6 @@ import type { IVariableSource } from '../runner/types.js';
 export interface EnvironmentProfile {
     /** Profile name */
     name: string;
-
-    /** Base URL for API requests */
-    baseUrl?: string;
 
     /** Variables specific to this environment */
     variables: Record<string, string>;
@@ -53,10 +51,6 @@ class EnvironmentVariableSource implements IVariableSource {
     }
 
     async get(key: string): Promise<string | undefined> {
-        // Check for special keys
-        if (key === 'baseUrl') {
-            return this.profile.baseUrl;
-        }
         return this.profile.variables[key];
     }
 }
@@ -69,10 +63,13 @@ export class EnvironmentManager {
     private readonly environmentsDir: string;
     private profile: EnvironmentProfile | null = null;
     private secretValues: Set<string> = new Set();
+    private dotEnvSource: DotEnvSource;
 
     constructor(options: EnvironmentManagerOptions) {
         this.projectRoot = options.projectRoot;
         this.environmentsDir = options.environmentsDir ?? 'environments';
+        // Initialize DotEnvSource for resolving env. secrets
+        this.dotEnvSource = new DotEnvSource({ loadLocal: true });
     }
 
     /**
@@ -92,16 +89,26 @@ export class EnvironmentManager {
 
             this.profile = {
                 name: (data.name as string) ?? name,
-                baseUrl: data.baseUrl as string | undefined,
                 variables: (data.variables as Record<string, string>) ?? {},
                 secrets: (data.secrets as string[]) ?? [],
             };
 
             // Cache secret values for masking
+            // Supports both profile variables and env.VAR_NAME syntax
             this.secretValues.clear();
             for (const secretKey of this.profile.secrets) {
-                const value = this.profile.variables[secretKey];
-                if (value) {
+                let value: string | undefined;
+
+                if (secretKey.startsWith('env.')) {
+                    // Resolve from .env files using DotEnvSource
+                    const envKey = secretKey.slice(4); // Remove 'env.' prefix
+                    value = await this.dotEnvSource.get(envKey);
+                } else {
+                    // Resolve from profile variables
+                    value = this.profile.variables[secretKey];
+                }
+
+                if (value && value.length > 0) {
                     this.secretValues.add(value);
                 }
             }
