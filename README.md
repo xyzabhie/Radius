@@ -31,13 +31,21 @@ A headless API request runner with YAML-based request definitions, environment m
 
 ## Why Radius?
 
-Radius is an Engine-First API orchestrator designed for high-precision workflows where GUIs often fail.
-- **CLI-first**: Designed for terminal and CI/CD pipelines experiences
-- **Git-friendly**: All requests are plain YAML files that diff and merge cleanly
-- **Headless**: GUI is optional - runs entirely in terminal (GUI coming in the future releases)
-- **Scriptable**: JavaScript pre/post hooks with a full assertion library
-- **Lightweight**: Single CLI tool with minimal dependencies
-- **Team-ready**: Share request collections via version control
+Radius is a next-generation API Client that combines the speed of a CLI with the power of a modern GUI.
+- **Dual Mode**: A robust CLI for CI/CD pipelines and a beautiful **GUI** for interactive development.
+- **Git-friendly**: All requests are plain YAML files that diff and merge cleanly.
+- **Scriptable**: JavaScript pre/post hooks with a full assertion library.
+- **Team-ready**: Share request collections via version control.
+- **Lightweight**: Optimized Rust backend with a React frontend.
+
+---
+
+## What's New in v1.1.0 (GUI) 🚀
+
+- **Smart Tab Navigation**: Efficiently manage 50+ open tabs with new scroll controls.
+- **Modern UI**: Clean, "Inverted Zinc" theme with removed visual clutter (no dotted borders).
+- **Streamlined Sidebar**: Redesigned architecture for faster navigation.
+- **Windows Support**: Native `.exe` installer available.
 
 ---
 
@@ -64,6 +72,10 @@ Before installing Radius, ensure you have:
 
 ## Installation
 
+### GUI (Windows)
+Download the latest installer (`.exe`) from the [Releases Page](../../releases).
+
+### CLI (npm)
 ```bash
 # Clone the repository
 git clone https://github.com/xyzabhie/Radius.git
