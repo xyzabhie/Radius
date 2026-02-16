@@ -5,6 +5,8 @@ node_modules/
 dist/
 build/
 *.tsbuildinfo
+target/
+src-tauri/target/
 
 # Environment files (may contain secrets)
 .env
@@ -16,6 +18,10 @@ build/
 session.json
 session_results.json
 *.session.json
+
+# Postman Data
+postmanCollections.json
+postmanEnvironment.json
 
 # Logs
 *.log
