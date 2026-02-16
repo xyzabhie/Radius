@@ -45,6 +45,8 @@ Radius is a hybrid API client designed for high-precision workflows. It operates
 
 ## Release Notes: v1.1.0
 
+RADIUS was young and immature in the very first release, but it has learned a lot of things to help you in API testing.
+
 ### Architecture Enhancements
 - **Hybrid Execution Engine**: Decoupled `ScriptRunner.ts` from the network layer. Pre-request scripts now run in a sandboxed VM context, while network requests are handled by the native Rust backend (Tauri) or Node.js `http` agent (CLI).
 - **Postman Compatibility Layer**: Implemented a transformation engine in `components/import` that maps Postman Collection v2.1 schemas to Radius YAML definitions, preserving script logic and environment variables.
