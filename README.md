@@ -47,6 +47,13 @@ Radius is a next-generation API Client that combines the speed of a CLI with the
 - **Streamlined Sidebar**: Redesigned architecture for faster navigation.
 - **Windows Support**: Native `.exe` installer available.
 
+### Architecture Enhancements 🛠️
+
+- **Hybrid Execution Engine**: Split `ScriptRunner.ts` (Sandbox Logic) from `BrowserRunner.ts` (Network Execution) to ensure secure, isolated script evaluation.
+- **Postman Compatibility Layer**: A dedicated translation layer in `components/import` that maps Postman Collections/Environments to Radius Schema v1 without data loss.
+- **Unified Sidebar Architecture**: Consolidated navigation logic into a single `Sidebar.tsx` component, removing legacy V1 implementations.
+- **Theme State Management**: Migrated theme logic to `useThemeStore` (Zustand) for instant, flicker-free light/dark mode switching.
+
 ---
 
 ## Features
