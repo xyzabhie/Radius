@@ -1,38 +1,37 @@
 {
-  "name": "radius",
-  "version": "1.0.0",
-  "description": "Radius - API Request Runner",
-  "main": "dist/core/runner/index.js",
-  "types": "dist/core/runner/index.d.ts",
-  "bin": {
-    "radius": "./dist/cli/index.js"
-  },
+  "name": "radius-monorepo",
+  "version": "1.1.0",
+  "description": "Radius - Git-friendly API Client",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "dev": "pnpm --filter @radius/gui dev",
+    "build": "pnpm -r build",
+    "build:core": "pnpm --filter @radius/core build",
+    "build:cli": "pnpm --filter @radius/cli build",
+    "build:gui": "pnpm --filter @radius/gui build",
+    "test": "pnpm -r test",
+    "test:core": "pnpm --filter @radius/core test",
+    "test:cli": "pnpm --filter @radius/cli test",
+    "lint": "pnpm -r lint",
+    "clean": "pnpm -r clean"
   },
   "keywords": [
     "api",
     "http",
     "request",
-    "runner"
+    "runner",
+    "postman",
+    "gui"
   ],
   "author": "",
   "license": "MIT",
-  "type": "module",
-  "dependencies": {
-    "ajv": "^8.17.1",
-    "commander": "^14.0.2",
-    "dotenv": "^17.2.3",
-    "js-yaml": "^4.1.1",
-    "picocolors": "^1.1.1",
-    "undici": "^7.19.2"
-  },
   "devDependencies": {
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "^25.1.0",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
-  }
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@9.0.0"
 }

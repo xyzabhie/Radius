@@ -1,0 +1,685 @@
+{
+    "info": {
+        "_postman_id": "6dc21c24-f0c3-4069-8e57-674bc3511cce",
+        "name": "Integration Workshop 2026-01-05",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "26950963"
+    },
+    "item": [
+        {
+            "name": "Force Integration Callback",
+            "item": [
+                {
+                    "name": "Notes to update callback",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "Do the \"Retrieve All Integration Executions\" first. Find your problem Integration. \r\nUse the \"ID\" of the integration in the response as the \"ID\" in the \"Force Integration Completed\" request. \r\nUse the \"IntegrationId\" in the response as the \"ExecutionId\" in the \"Force Integration Completed\" request"
+                        },
+                        "url": {
+                            "raw": ""
+                        },
+                        "description": "ID = ID\r\nIntegrationId = ExecutionId"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Retrieve All Integration Executions",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "{{access_token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{url}}/api/v1/platform/integration_executions",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "platform",
+                                "integration_executions"
+                            ],
+                            "query": [
+                                {
+                                    "key": "fromDate",
+                                    "value": "",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "toDate",
+                                    "value": "",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "IntegrationId",
+                                    "value": "",
+                                    "disabled": true
+                                }
+                            ]
+                        },
+                        "description": "This operation returns a list of all integration runs including completed, in-progress, scheduled, and failed integration runs. The list shows details including start and end times, parameter settings, which employee ran each integration, and the status. You can filter the integration runs. To retrieve integrations from the past four days, filter by integrationId alone. Otherwise, you must filter by integrationId, fromDate, and toDate.\r\n"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Force Integration Completed",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "{{access_token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"batchIntegration\": {\n    \"callbackmessages\": \"Integration has been beaten into submission\",\n    \"executionid\": \"434\",\n    \"id\": 763,\n    \"status\": \"Completed\"\n  }\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/api/v1/platform/integrations/update_status",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "platform",
+                                "integrations",
+                                "update_status"
+                            ]
+                        },
+                        "description": "Do the \"Retrieve All Integration Executions\" first.  Find your problem Integration.  Use the ID of the integration in the response as the ID in the \"Force Integration Completed\" request.   Use the IntegrationId in the response as the ExecutionId in the \"Force Integration Completed\" request"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Get an Access Token",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var jsonData = JSON.parse(responseBody);",
+                            "postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+                            "postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "auth": {
+                    "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                    }
+                ],
+                "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                        {
+                            "key": "username",
+                            "value": "{{username}}",
+                            "type": "text"
+                        },
+                        {
+                            "key": "password",
+                            "value": "{{password}}",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_id",
+                            "value": "{{client_id}}",
+                            "type": "text"
+                        },
+                        {
+                            "key": "client_secret",
+                            "value": "{{client_secret}}",
+                            "type": "text"
+                        },
+                        {
+                            "key": "grant_type",
+                            "value": "password",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{url}}/api/authentication/access_token",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "authentication",
+                        "access_token"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Retrieve Hyperfinds",
+            "request": {
+                "auth": {
+                    "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/v1/commons/hyperfind",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "commons",
+                        "hyperfind"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Execute Hyperfind",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"dateRange\": {\n        \"symbolicPeriod\": {\n            \"qualifier\": \"Current_Payperiod\"\n        }\n    },\n    \"hyperfind\": {\n        \"qualifier\": \"All Home\"\n    }\n}"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/commons/hyperfind/execute",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "commons",
+                        "hyperfind",
+                        "execute"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Retrieve SymbolicPeriods",
+            "request": {
+                "auth": {
+                    "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/v1/commons/symbolicperiod",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "commons",
+                        "symbolicperiod"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Bulk Import Punches",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"punches\": [\n        {\n            \"punchDtm\": \"2026-01-05T08:00:00\",\n            \"employee\": {\n                \"qualifier\": \"20176\"\n            }\n        },\n        {\n            \"punchDtm\": \"2026-01-05T09:00:00\",\n            \"employee\": {\n                \"qualifier\": \"20176\"\n            }\n        }\n    ]\n}"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/timekeeping/punches/import",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "timekeeping",
+                        "punches",
+                        "import"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Person MultiUpdate - Wage Rate",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "[\n    {\n        \"personIdentity\": {\n            \"personNumber\": \"10002\"\n        },\n        \"jobAssignment\": {\n            \"baseWageRates\": [\n                {\n                    \"effectiveDate\": \"2026-01-05\",\n                    \"hourlyRate\": 15.00\n                }\n            ]\n        }\n    },\n    {\n        \"personIdentity\": {\n            \"personNumber\": \"10003\"\n        },\n        \"jobAssignment\": {\n            \"baseWageRates\": [\n                {\n                    \"effectiveDate\": \"2026-01-05\",\n                    \"hourlyRate\": 15.00\n                }\n            ]\n        }\n    }\n]"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/commons/persons/multi_update",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "commons",
+                        "persons",
+                        "multi_update"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Retrieve Persons - Extensions",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"where\": {\n    \"employees\": {\n      \"key\": \"personnumber\",\n      \"values\": [\n        \"20176\"\n      ]\n    },\n    \"extensionType\": \"employee\"\n  }\n}"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/commons/persons/extensions/multi_read",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "commons",
+                        "persons",
+                        "extensions",
+                        "multi_read"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Retrieve Accrual Codes",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/v2/timekeeping/setup/accrual_codes",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v2",
+                        "timekeeping",
+                        "setup",
+                        "accrual_codes"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Accrual Balance Reset",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"accrualResets\": [\n    {\n      \"accrualReset\": {\n        \"employee\": {\"qualifier\": \"90106\"},\n        \"accrualCode\": {\"qualifier\": \"Personal Day\"},\n        \"amount\": 10,\n        \"effectiveDate\": \"2024-08-19\"\n        }\n      },\n    {\n      \"accrualReset\": {\n        \"employee\": {\"qualifier\": \"90106\"},\n        \"accrualCode\": {\"qualifier\": \"Sick Hours\"},\n        \"amount\": 16,\n        \"effectiveDate\": \"2024-08-19\"\n        }\n      }\n  ]\n}"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/timekeeping/accruals/resets",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "timekeeping",
+                        "accruals",
+                        "resets"
+                    ]
+                },
+                "description": "This opertation performs a bulk accrual reset."
+            },
+            "response": []
+        },
+        {
+            "name": "Profile Assignment - Cascade Profile",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "[\r\n  {\r\n    \"personIdentity\": {\r\n      \"personNumber\": \"20002\"\r\n    },\r\n    \"personAssignments\": {\r\n        \"cascadeProfile\": {\r\n            \"unAssignExisting\": \"True\",\r\n            \"assignmentProfile\": \"All Cascades\"\r\n        }\r\n    }\r\n  },\r\n    {\r\n    \"personIdentity\": {\r\n      \"personNumber\": \"20003\"\r\n    },\r\n    \"personAssignments\": {\r\n        \"cascadeProfile\": {\r\n            \"unAssignExisting\": \"True\",\r\n            \"assignmentProfile\": \"All Cascades\"\r\n        }\r\n    }\r\n  }\r\n]"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/commons/persons/assignments/multi_upsert",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "commons",
+                        "persons",
+                        "assignments",
+                        "multi_upsert"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Timecard Edit - Add Paycode",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"do\": {\r\n        \"payCodeEdits\": {\r\n            \"added\": [\r\n                {\r\n                    \"amountType\": \"MONEY\",\r\n                    \"paycode\": {\"name\": \"Miles Traveled\"},\r\n                    \"applyDate\": \"2024-08-19\",\r\n                    \"employee\": {\"qualifier\": 20107},\r\n                    \"moneyAmount\": \"5.75\"\r\n                }\r\n            ]\r\n        }\r\n    },\r\n    \"where\": {\r\n        \"dateRange\": {\r\n            \"startDate\": \"2024-08-19\",\r\n            \"endDate\": \"2024-08-19\"\r\n        },\r\n        \"employee\": {\"qualifier\": \"20107\"}\r\n    }\r\n}"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/timekeeping/timecard",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "timekeeping",
+                        "timecard"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Timecard Data",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"where\": {\n    \"dateRange\": {\n      \"symbolicPeriod\": {\n        \"qualifier\": \"Current_Payperiod\"\n      }\n    },\n    \"employees\": {\n      \"qualifiers\": [\n        \"POTTEREMP5\"\n      ]\n    }\n  }\n}"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/timekeeping/employee_timecard/multi_read",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "timekeeping",
+                        "employee_timecard",
+                        "multi_read"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Bulk Signoff",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"symbolicPeriod\": {\r\n    \"qualifier\": \"Previous_Payperiod\"\r\n  },\r\n  \"employees\": {\r\n    \"qualifiers\": [\r\n      \"10000\",\r\n      \"10001\",\r\n      \"10002\",\r\n      \"10003\",\r\n      \"10004\",\r\n      \"10005\",\r\n      \"10038\",\r\n      \"20000\",\r\n      \"20002\",\r\n      \"20003\",\r\n      \"20176\",\r\n      \"20210\",\r\n      \"20209\",\r\n      \"90106\",\r\n      \"40075\"\r\n    ]\r\n  }\r\n}"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/timekeeping/signoffs/import",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "timekeeping",
+                        "signoffs",
+                        "import"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Information Access - Data Dictionary",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "{{access_token}}"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/v1/commons/data_dictionary/data_elements",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "commons",
+                        "data_dictionary",
+                        "data_elements"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Information Access - MultiRead by EmployeeID",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "authorization",
+                        "value": "{{access_token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n \"select\": [\r\n     { \"key\": \"EMP_COMMON_FULL_NAME\"},\r\n     { \"key\": \"PEOPLE_PERSON_NUMBER\"},\r\n     { \"key\": \"EMP_COMMON_PRIMARY_JOB\"},\r\n     { \"key\": \"PEOPLE_BADGE_NUMBER\"},\r\n     { \"key\": \"PEOPLE_HIRE_DATE\"}\r\n     ],\r\n \"from\": {\r\n     \"view\": \"EMP\",\r\n     \"employeeSet\": {\r\n          \"employees\": {\r\n               \"qualifiers\": [20176,40075,20210,90106]\r\n          },\r\n          \"dateRange\": {\r\n               \"symbolicPeriod\": {\r\n                    \"qualifier\": \"Current_Payperiod\"\r\n               }\r\n        \t}\r\n    \t}\r\n\t}\r\n}"
+                },
+                "url": {
+                    "raw": "{{url}}/api/v1/commons/data/multi_read",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "v1",
+                        "commons",
+                        "data",
+                        "multi_read"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

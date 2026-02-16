@@ -1,0 +1,66 @@
+{
+    "name": "@radius/core",
+    "version": "1.1.0",
+    "description": "Radius Core Engine - Headless API request runner",
+    "type": "module",
+    "main": "dist/runner/index.js",
+    "types": "dist/runner/index.d.ts",
+    "files": [
+        "dist",
+        "schemas"
+    ],
+    "exports": {
+        ".": {
+            "import": "./dist/runner/index.js",
+            "types": "./dist/runner/index.d.ts"
+        },
+        "./environment": {
+            "import": "./dist/environment/index.js",
+            "types": "./dist/environment/index.d.ts"
+        },
+        "./session": {
+            "import": "./dist/session/index.js",
+            "types": "./dist/session/index.d.ts"
+        },
+        "./types/filesystem": {
+            "import": "./dist/types/filesystem.js",
+            "types": "./dist/types/filesystem.d.ts"
+        },
+        "./node": {
+            "import": "./dist/runner/node.js",
+            "types": "./dist/runner/node.d.ts"
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "lint": "eslint src --ext .ts",
+        "clean": "rimraf dist"
+    },
+    "keywords": [
+        "api",
+        "http",
+        "request",
+        "runner",
+        "headless"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "ajv": "^8.17.1",
+        "dotenv": "^17.2.3",
+        "js-yaml": "^4.1.1",
+        "undici": "^7.19.2"
+    },
+    "devDependencies": {
+        "@types/js-yaml": "^4.0.9",
+        "@types/node": "^25.1.0",
+        "rimraf": "^5.0.5",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}

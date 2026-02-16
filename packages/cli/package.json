@@ -1,0 +1,38 @@
+{
+    "name": "@radius/cli",
+    "version": "1.1.0",
+    "description": "Radius CLI - Command-line interface for API testing",
+    "type": "module",
+    "bin": {
+        "radius": "./dist/index.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "lint": "eslint src --ext .ts",
+        "clean": "rimraf dist"
+    },
+    "keywords": [
+        "api",
+        "cli",
+        "http",
+        "request"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@radius/core": "workspace:*",
+        "commander": "^14.0.2",
+        "picocolors": "^1.1.1"
+    },
+    "devDependencies": {
+        "@types/node": "^25.1.0",
+        "rimraf": "^5.0.5",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}

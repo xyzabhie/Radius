@@ -12,25 +12,29 @@ request:
     Content-Type: "application/json"
 
   body:
-    format: graphql
-    query: |
-      query GetUsers($limit: Int!, $offset: Int) {
-        users(limit: $limit, offset: $offset) {
-          id
-          username
-          email
-          createdAt
-          profile {
-            firstName
-            lastName
-            avatar
+  body:
+    type: graphql
+    graphql:
+      query: |
+        query GetUsers($limit: Int!, $offset: Int) {
+          users(limit: $limit, offset: $offset) {
+            id
+            username
+            email
+            createdAt
+            profile {
+              firstName
+              lastName
+              avatar
+            }
           }
+          totalUsers
         }
-        totalUsers
-      }
-    variables:
-      limit: 10
-      offset: 0
+      variables: |
+        {
+          "limit": 10,
+          "offset": 0
+        }
 
 auth:
   type: bearer

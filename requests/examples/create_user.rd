@@ -13,11 +13,13 @@ request:
     X-Request-ID: "{{$uuid}}"
 
   body:
-    format: json
-    content:
-      username: "johndoe"
-      email: "john.doe@example.com"
-      role: "user"
+    type: json
+    text: |
+      {
+        "username": "johndoe",
+        "email": "john.doe@example.com",
+        "role": "user"
+      }
 
 auth:
   type: bearer

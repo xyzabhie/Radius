@@ -1,0 +1,309 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CodeMirror overrides for response editor */
+.response-editor-cm .cm-editor {
+  outline: none !important;
+}
+
+.response-editor-cm .cm-scroller {
+  background-color: transparent !important;
+}
+
+.response-editor-cm .cm-gutters {
+  background-color: transparent !important;
+  border-right: none !important;
+}
+
+.response-editor-cm .cm-content {
+  background-color: transparent !important;
+}
+
+/* Global CodeMirror focus outline suppression */
+.cm-editor.cm-focused {
+  outline: none !important;
+}
+
+@layer base {
+  :root {
+    /* Modern "Linear" Dark Theme (Zinc + Vivid Blue) */
+
+    /* Backgrounds: "Midnight Pro" (Rich Slate-Grey) */
+    --background: 226 20% 10%;
+    /* #1d202e - Deep rich slate */
+    --foreground: 210 20% 98%;
+
+    /* Surface / Sidebar */
+    --card: 226 25% 8%;
+    /* #0f121d - Darker, slight blue tint */
+    --card-foreground: 210 20% 98%;
+
+    --sidebar: 226 30% 6%;
+    /* #0b0d14 - Almost black but with depth */
+    --sidebar-foreground: 215 15% 70%;
+
+    --panel: 226 25% 8%;
+    /* #0f121d */
+
+    --popover: 226 25% 8%;
+    --popover-foreground: 210 20% 98%;
+
+    /* Brand / Primary */
+    --primary: 226 80% 60%;
+    /* #5c85ff - Professional Indigo-Blue */
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary / Subtlety */
+    --secondary: 226 20% 14%;
+    --secondary-foreground: 210 20% 98%;
+
+    /* Muted */
+    --muted: 226 20% 14%;
+    --muted-foreground: 215 15% 65%;
+
+    /* Accent / Hovers */
+    --accent: 226 20% 15%;
+    --accent-foreground: 210 20% 98%;
+
+    /* Structural */
+    --border: 240 3.7% 15.9%;
+    /* #27272a (Zinc 800) - Subtle borders */
+    --input: 240 3.7% 15.9%;
+    /* Focus ring */
+
+    /* Semantic / Methods */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --method-get: 142 71% 45%;
+    /* Green */
+    --method-post: 32 95% 44%;
+    /* Orange */
+    --method-put: 217 91% 60%;
+    /* Blue */
+    --method-delete: 0 84% 60%;
+    /* Red */
+
+    /* Constants */
+    --radius: 0.5rem;
+  }
+
+  .light {
+    /* Modern "Inverted Studio Zinc" Light Theme */
+    --background: 0 0% 100%;
+    /* Pristine White Background */
+    --foreground: 240 10% 10%;
+
+    /* Functional Surfaces / Sidebar */
+    --card: 240 5% 96%;
+    /* Studio Zinc functional areas */
+    --card-foreground: 240 10% 10%;
+
+    --sidebar: 240 5% 98%;
+    /* Very subtle sidebar contrast */
+    --sidebar-foreground: 240 5% 35%;
+
+    --panel: 240 5% 96%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+
+    /* Brand / Primary (High-Contrast Cobalt) */
+    --primary: 226 80% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary / Subtlety (used for table headers/tabs) */
+    --secondary: 240 4% 90%;
+    --secondary-foreground: 240 10% 10%;
+
+    /* Muted */
+    --muted: 240 5% 92%;
+    --muted-foreground: 240 5% 45%;
+
+    /* Accent / Hovers */
+    --accent: 240 5% 88%;
+    --accent-foreground: 240 10% 10%;
+
+    /* Structural (Sharper borders for white background) */
+    --border: 240 6% 85%;
+    --input: 240 6% 85%;
+
+    /* Semantic / Methods */
+    --destructive: 0 84% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --method-get: 142 71% 25%;
+    --method-post: 32 95% 30%;
+    --method-put: 217 91% 40%;
+    --method-delete: 0 84% 40%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13px;
+    /* IDE Standard */
+    line-height: 1.5;
+  }
+
+  /* Professional Text Selection */
+  ::selection {
+    background-color: hsl(217 91% 60% / 0.25);
+    color: white;
+  }
+}
+
+@layer utilities {
+
+  /* Modern Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    /* Slightly thinner */
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Hidden scrollbar util */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Glassmorphism helpers */
+  .glass {
+    @apply bg-background/80 backdrop-blur-md border border-border/50;
+  }
+}
+
+/* Response handle overrides */
+.response-handle-toolbar,
+.response-handle-toolbar * {
+  cursor: default !important;
+}
+
+.response-handle-toolbar button,
+.response-handle-toolbar [role="button"] {
+  cursor: pointer !important;
+}
+
+@layer utilities {
+  .bg-sidebar {
+    background-color: hsl(var(--sidebar));
+  }
+
+  .bg-panel {
+    background-color: hsl(var(--panel));
+  }
+}
+
+/* Professional Theme-Aware Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.15);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.25);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+/* Thin variant for editors/compact areas */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
+}
+
+/* Hidden scrollbar utility */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Beautiful Professional Response Header Highlight */
+.highlight-response-header {
+  transition: all 0.2s ease-in-out;
+  border-top: 1px solid hsl(var(--border) / 1) !important;
+  background: hsl(var(--card)) !important;
+  box-shadow: inset 0 1px 0 0 hsl(var(--background) / 0.5);
+}
+
+.dark .highlight-response-header {
+  border-top-color: hsl(var(--border) / 0.6) !important;
+  box-shadow: none;
+}
+
+.highlight-response-header:hover {
+  background: hsl(var(--muted) / 0.8) !important;
+}
+
+.dark .highlight-response-header:hover {
+  background: hsl(var(--muted) / 0.4) !important;
+}
+
+/* Thin CodeMirror Gutters */
+.cm-editor .cm-gutters {
+  background-color: transparent !important;
+  border-right: 1px solid hsl(var(--border) / 0.3) !important;
+  min-width: 2.5em !important;
+}
+
+.cm-editor .cm-gutterElement {
+  padding: 0 4px !important;
+  font-size: 11px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+.cm-editor .cm-lineNumbers .cm-gutterElement {
+  min-width: 1.8em !important;
+}
+
+/* Eliminate horizontal "gaps" globally in layout where needed */
+.main-layout-container {
+  padding: 0.25rem !important;
+}
