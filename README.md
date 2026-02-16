@@ -8,8 +8,9 @@ A headless API request runner with YAML-based request definitions, environment m
 
 ## Table of Contents
 
-- [Why Radius?](#why-radius)
-- [Features](#features)
+- [Overview](#overview)
+- [Release Notes: v1.1.0](#release-notes-v110)
+- [Core Capabilities](#core-capabilities)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
@@ -29,41 +30,38 @@ A headless API request runner with YAML-based request definitions, environment m
 
 ---
 
-## Why Radius?
+## Overview
 
-Radius is a next-generation API Client that combines the speed of a CLI with the power of a modern GUI.
-- **Dual Mode**: A robust CLI for CI/CD pipelines and a beautiful **GUI** for interactive development.
-- **Git-friendly**: All requests are plain YAML files that diff and merge cleanly.
-- **Scriptable**: JavaScript pre/post hooks with a full assertion library.
-- **Team-ready**: Share request collections via version control.
-- **Lightweight**: Optimized Rust backend with a React frontend.
+Radius is a hybrid API client designed for high-precision workflows. It operates in two modes:
+- **CLI Mode**: A headless Node.js runtime for CI/CD pipelines and automated testing.
+- **GUI Mode**: A Tauri/React-based desktop application for interactive development.
 
----
-
-## What's New in v1.1.0 (GUI) 🚀
-
-- **Smart Tab Navigation**: Efficiently manage 50+ open tabs with new scroll controls.
-- **Modern UI**: Clean, "Inverted Zinc" theme with removed visual clutter (no dotted borders).
-- **Streamlined Sidebar**: Redesigned architecture for faster navigation.
-- **Windows Support**: Native `.exe` installer available.
-
-### Architecture Enhancements 🛠️
-
-- **Hybrid Execution Engine**: Split `ScriptRunner.ts` (Sandbox Logic) from `BrowserRunner.ts` (Network Execution) to ensure secure, isolated script evaluation.
-- **Postman Compatibility Layer**: A dedicated translation layer in `components/import` that maps Postman Collections/Environments to Radius Schema v1 without data loss.
-- **Unified Sidebar Architecture**: Consolidated navigation logic into a single `Sidebar.tsx` component, removing legacy V1 implementations.
-- **Theme State Management**: Migrated theme logic to `useThemeStore` (Zustand) for instant, flicker-free light/dark mode switching.
+### Core Design Principles
+- **Git-Centric**: Requests are stored as plain YAML files, enabling cleaner diffs and merge conflict resolution compared to JSON data blobs.
+- **Hybrid Runtime**: Splits execution logic between a Node.js sandbox (for scripts) and a native network layer (for requests), ensuring isolation.
+- **Dependency-Free**: The core runner has minimal external dependencies to ensure stability and speed.
 
 ---
 
-## Features
+## Release Notes: v1.1.0
 
-- **YAML Request Definitions**: Define API requests in `.rd` files with full schema validation
-- **Variable Resolution**: Use `{{variable}}` syntax with support for environment files, `.env`, and dynamic variables
-- **Script Execution**: Pre-request and post-response JavaScript scripts with assertions
-- **Environment Profiles**: Switch between environments (local, staging, production) with secret masking
-- **Request Chaining**: Variables persist across requests in directory runs via the SessionManager
-- **Session Export**: Save session variables to JSON for debugging or CI integration
+### Architecture Enhancements
+- **Hybrid Execution Engine**: Decoupled `ScriptRunner.ts` from the network layer. Pre-request scripts now run in a sandboxed VM context, while network requests are handled by the native Rust backend (Tauri) or Node.js `http` agent (CLI).
+- **Postman Compatibility Layer**: Implemented a transformation engine in `components/import` that maps Postman Collection v2.1 schemas to Radius YAML definitions, preserving script logic and environment variables.
+- **Unified Sidebar Architecture**: Refactored navigation to a single-source-of-truth model, eliminating redundant V1 legacy components.
+- **State Management**: Migrated application state (Themes, Tabs) to Zustand stores to improve render performance and state consistency.
+
+### UI/UX Improvements
+- **Virtual Tab Management**: Implemented horizontal scrolling and lazy rendering for handling large workspaces (50+ active tabs).
+- **Windows Export**: Added NSIS configuration for generating specific Windows `.exe` installers.
+
+## Core Capabilities
+
+- **YAML Request Definitions**: API requests defined in `.rd` files with strict schema validation.
+- **Variable Resolution**: 4-tier scope resolution (Session > Environment > .env > System).
+- **Script Execution**: JavaScript sandbox for pre-request setup and post-response assertions.
+- **Environment Profiles**: Configuration files for managing distinct deployment targets (local, staging, prod).
+- **Request Chaining**: Persistent session variables enabling multi-step workflows.
 
 ---
 
@@ -79,10 +77,11 @@ Before installing Radius, ensure you have:
 
 ## Installation
 
-### GUI (Windows)
-Download the latest installer (`.exe`) from the [Releases Page](../../releases).
+### Desktop Application (Windows)
+Pre-built binaries are available for Windows x64. Download the latest installer from the [GitHub Releases Page](../../releases).
 
-### CLI (npm)
+### CLI Installation (npm)
+For headless environments:
 ```bash
 # Clone the repository
 git clone https://github.com/xyzabhie/Radius.git
